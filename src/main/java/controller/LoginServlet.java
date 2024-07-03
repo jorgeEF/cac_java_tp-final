@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
         // Redirigir según la validación
         if (usuarioValido) {
-            response.sendRedirect("/proyectoJava_24111/pages/gestionUsuarios.html");
+            response.sendRedirect("/pages/gestionUsuarios.html");
         } else {
             response.sendRedirect("index.html");
         }
