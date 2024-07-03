@@ -1,3 +1,5 @@
-# Codo a Codo FullStack 2024
+# Codo a Codo Java FullStack 2024
 
-### Comision 24113 - Grupo 2
+### Comision 24113  
+
+Jorge E. Femenia
