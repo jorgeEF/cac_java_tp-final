@@ -62,7 +62,7 @@
         </div>    
         
         <div>        
-            <form action="/publicarServlet" method="post">
+            <form action="/cac_java_tp-final/publicar" method="post" enctype="multipart/form-data">
                 <h2 class="tituloPublicar ">Crear nueva publicación</h2>
                 <div>
                     <p><label for="titulo">Título de publicación:</label></p>
@@ -70,8 +70,8 @@
                     <div class="error-text"></div>
                 </div>
                 <div>
-                    <p><label for="img">Cargar imagen:</label></p>
-                    <input type="file" id="img" name="img">
+                    <p><label for="img_path">Cargar imagen:</label></p>
+                    <input type="file" id="img_path" name="img_path">
                     <div class="error-text"></div>
                 </div>
                 <div>                    

@@ -11,7 +11,7 @@ public class Publicacion {
     private int id;
     private String titulo;    
     private String contenido;    
-    private int img_id;
+    private String img_path;
     private int creator_id;
     private Date fecha;
 
@@ -40,12 +40,12 @@ public class Publicacion {
         this.contenido = contenido;
     }
 
-    public int getImg_id() {
-        return img_id;
+    public String getImg_path() {
+        return img_path;
     }
 
-    public void setImg_id(int img_id) {
-        this.img_id = img_id;
+    public void setImg_path(String img_path) {
+        this.img_path = img_path;
     }
 
     public int getCreator_id() {

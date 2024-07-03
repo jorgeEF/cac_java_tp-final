@@ -1,59 +1,104 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
-import java.io.IOException;
+import dao.PublicacionDAO;
+import modelo.Publicacion;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Publicacion;
-import dao.PublicacionDAO;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDate;
 import java.sql.Date;
 
-
-/**
- *
- * @author Jef
- */
+@WebServlet("/publicar")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class PublicacionServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final String UPLOAD_DIRECTORY = "/assets/img"; // Directorio de subida de archivos relativo a Web Pages
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtener parámetros de la solicitud
-        String titulo = request.getParameter("titulo");
-        String contenido = request.getParameter("contenido");
-        String img_id = request.getParameter("img_id");
-        String fecha = request.getParameter("fecha");
-        String creator_id = request.getParameter("creator_id");
-        
+        // Obtener la ruta absoluta de Web Pages
+        String applicationPath = getServletContext().getRealPath("");
+        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIRECTORY;
 
-        Publicacion post = new Publicacion();
-        post.setTitulo(titulo);
-        post.setContenido(contenido);
-        post.setImg_id(Integer.parseInt(img_id));
-        //convierte una cadena de texto a un objeto Date
-        //proviene del paquete java.sql
-        post.setFecha(Date.valueOf(fecha));
-        post.setCreator_id(Integer.parseInt(creator_id));
-        
-
-        PublicacionDAO publicacionDAO = new PublicacionDAO();
-        boolean publicacionExitosa = publicacionDAO.guardarPublicacion(post);
-        if (publicacionExitosa) {
-            response.sendRedirect("pages/publicar.html?exito=true");
-        } else {
-            response.sendRedirect("pages/publicar.html?error=true");
+        // Asegurar que el directorio de subida exista
+        File uploadDir = new File(uploadFilePath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs(); // Crea el directorio y subdirectorios si no existen
         }
+
+        // Procesar el archivo subido
+        Part filePart = request.getPart("img_path");
+        String fileName = extractFileName(filePart); // Extraer nombre de archivo del contenido de la cabecera HTTP
+
+        OutputStream out = null;
+        InputStream filecontent = null;
+
+        try {
+            // Guardar el archivo en la carpeta deseada
+            out = new FileOutputStream(new File(uploadDir, fileName));
+            filecontent = filePart.getInputStream();
+
+            int read;
+            final byte[] bytes = new byte[1024];
+            while ((read = filecontent.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            // Guardar la publicación en la base de datos con la ruta relativa del archivo
+            String titulo = request.getParameter("titulo");
+            String contenido = request.getParameter("contenido");
+            String imgPath = UPLOAD_DIRECTORY + "/" + fileName; // Ruta relativa al archivo
+
+            LocalDate fecha = LocalDate.now();
+            String creator_id = "1"; // Suponiendo que obtienes el ID del creador
+
+            Publicacion post = new Publicacion();
+            post.setTitulo(titulo);
+            post.setContenido(contenido);
+            post.setImg_path(imgPath); // Guarda la ruta relativa al archivo en la base de datos
+            post.setFecha(Date.valueOf(fecha));
+            post.setCreator_id(Integer.parseInt(creator_id));
+
+            PublicacionDAO publicacionDAO = new PublicacionDAO();
+            boolean publicacionExitosa = publicacionDAO.guardarPublicacion(post);
+
+            if (publicacionExitosa) {
+                response.sendRedirect("pages/publicar.html?exito=true");
+            } else {
+                response.sendRedirect("pages/publicar.html?error=true");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("pages/publicar.html?error=true");
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            if (filecontent != null) {
+                filecontent.close();
+            }
+        }
+    }
+
+    // Extrae el nombre del archivo de la cabecera HTTP
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+            }
+        }
+        return "";
     }
 }
