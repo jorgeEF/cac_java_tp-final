@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tiempo</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="contact.css" />
+</head>
+<body>
+    <div class="mb-5">
+        <header>
+            <h1>Conexión a API</h1>
+            <nav id="nav-desktop">
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="#">Categorias</a></li>                    
+                    <li><a href="contact.html">Contacto</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="./api.html">Conexión a API</a></li>
+                </ul>
+            </nav>
+            <button>Suscribirse</button>
+
+            <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <ul class="mobile-menu">
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="#">Categorias</a></li>                    
+                    <li><a href="contact.html">Contacto</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="./api.html">Conexión a API</a></li>
+                    <li><a href="/#">Suscribirse</a></li>
+                </ul>
+            </div>
+        </header>
+    </div>    
+
+<!--     <div class="container w-50 d-flex justify-content-center">    
+        <h1>Pronóstico del tiempo</h1>
+        <div id="weather-data">
+            Weather data will be inserted here
+        </div>
+
+        <p>Info de la API utilizada <a href="https://github.com/robertoduessmann/weather-api">aquí</a></p>
+    </div> -->
+
+    <div class="container w-50 d-flex justify-content-center">
+        <h1>Pronóstico del tiempo</h1>
+        <input type="text" id="cityInput" placeholder="Ingrese el nombre de la ciudad">
+        <button id="submitButton">Consultar</button>
+        <div id="weather-data">
+            <!-- Weather data will be inserted here -->
+        </div>
+        <p>NOTA: Si no se muestra información del tiempo es porque el servidor de la API no esta funcionando de momento. Por favor, Intentar en unos minutos.</p>
+        <p>Info de la API utilizada <a href="https://github.com/robertoduessmann/weather-api">aquí</a></p>
+    </div>
+
+    <script src="./api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>
