@@ -1,6 +1,7 @@
 package controller;
 
 import dao.UserDao;
+import modelo.Usuario; // Asegúrate de tener un modelo de Usuario
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,26 +9,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtener los parámetros del formulario de login
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
 
-        // Instanciar el DAO para validar las credenciales
         UserDao userDao = new UserDao();
-        boolean usuarioValido = userDao.validarUsuario(email, password);
+        Usuario usuario = userDao.validarUsuario(email, password);
 
-        // Redirigir según la validación
-        if (usuarioValido) {
+        if (usuario != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", usuario);
             response.sendRedirect("/cac_java_tp-final/index.html?exito=true");
         } else {
-            response.sendRedirect("/cac_java_tp-final/pages/login.html?exito=false");
+            response.sendRedirect("/cac_java_tp-final/pages/login.html?error=true");
         }
     }
 }

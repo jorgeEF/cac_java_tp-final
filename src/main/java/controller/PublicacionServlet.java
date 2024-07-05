@@ -61,6 +61,7 @@ public class PublicacionServlet extends HttpServlet {
             String imgPath = UPLOAD_DIRECTORY + "/" + fileName; // Ruta relativa al archivo
 
             LocalDate fecha = LocalDate.now();
+            
             String creator_id = "1"; // Suponiendo que obtienes el ID del creador
 
             Publicacion post = new Publicacion();

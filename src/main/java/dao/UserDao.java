@@ -1,6 +1,8 @@
 package dao;
 
 import conexion.ConexionDB;
+import modelo.Usuario;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,28 +10,30 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    public boolean validarUsuario(String email, String password) {
-        boolean validar = false;
+    public Usuario validarUsuario(String email, String password) {
+        Usuario usuario = null;
 
         String sql = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
 
         try {
-            //obtenemos la conexion
             Connection conexion = ConexionDB.obtenerConexion();
-            //preparar la consulta
             PreparedStatement consulta = conexion.prepareStatement(sql);
-            //argumentos
             consulta.setString(1, email);
             consulta.setString(2, password);
-            //ejecutar la consulta
             ResultSet resultado = consulta.executeQuery();
-            
-            validar = resultado.next();
+
+            if (resultado.next()) {
+                usuario = new Usuario();
+                usuario.setId(resultado.getInt("id"));
+                usuario.setEmail(resultado.getString("email"));
+                usuario.setNombre(resultado.getString("nombre"));
+                // Configura otros campos según tu modelo
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return validar;
+        return usuario;
     }
 }

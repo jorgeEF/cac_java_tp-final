@@ -34,7 +34,7 @@ public class UsuarioDAO {
     }
     
     public boolean crearUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, apellido, email, password, fechaNacimiento, pais) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, apellido, email, password) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -42,9 +42,7 @@ public class UsuarioDAO {
             pstmt.setString(1, usuario.getNombre());
             pstmt.setString(2, usuario.getApellido());
             pstmt.setString(3, usuario.getEmail());
-            pstmt.setString(4, usuario.getPassword());
-            pstmt.setDate(5, usuario.getFechaNacimiento());
-            pstmt.setString(6, usuario.getPais());
+            pstmt.setString(4, usuario.getPassword());            
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
@@ -61,8 +59,7 @@ public class UsuarioDAO {
         usuario.setApellido(rs.getString("apellido"));
         usuario.setEmail(rs.getString("email"));
         usuario.setPassword(rs.getString("password"));
-        usuario.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-        usuario.setPais(rs.getString("pais"));
+        
         return usuario;
     }
 
@@ -103,17 +100,15 @@ public class UsuarioDAO {
     }
 
     public boolean modificar(Usuario usuario) {
-        String query = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ?, fechaNacimiento = ?, pais = ? WHERE id = ?";
+        String query = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ? WHERE id = ?";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             
             pstmt.setString(1, usuario.getNombre());
             pstmt.setString(2, usuario.getApellido());
             pstmt.setString(3, usuario.getEmail());
-            pstmt.setString(4, usuario.getPassword());
-            pstmt.setDate(5, usuario.getFechaNacimiento());
-            pstmt.setString(6, usuario.getPais());
-            pstmt.setInt(7, usuario.getId());
+            pstmt.setString(4, usuario.getPassword());            
+            pstmt.setInt(5, usuario.getId());
             
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;

@@ -14,29 +14,27 @@
     <body>
         <div class="container mt-5">
             <nav id="nav-desktop">
-                <ul>
-                    <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
-                    <li><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
-                    <!-- <li><a href="/cac_java_tp-final/pages/registrarse.html">Registrarse</a></li> -->
-                    <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
-                    <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
-                    <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
-                </ul>
-            </nav>  
+                    <ul id="nav-menu">
+                        <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
+                        <li id="menu-nueva-publicacion" style="display: none;"><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
+                        <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
+                        <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
+                        <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
+                    </ul>
+                </nav>  
 
-            <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-                <ul class="mobile-menu">
-                    <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
-                    <li><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
-                    <!-- <li><a href="/cac_java_tp-final/pages/registrarse.html">Registrarse</a></li> -->
-                    <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
-                    <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
-                    <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
-                </ul>
-            </div>
+                <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                    <ul class="mobile-menu">                        
+                        <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
+                        <li id="menu-nueva-publicacion" style="display: none;"><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
+                        <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
+                        <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
+                        <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
+                    </ul>
+                </div>
 
             <h1 class="mb-4">Gestión de Publicaciones</h1>
             <table class="table table-striped" id="usuariosTable">
@@ -53,10 +51,12 @@
                 </tbody>
             </table>
         </div>
-
+        
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../js/gestionPublicaciones.js"></script>
-        <script src="../js/index.js"></script>
+        <script src="/cac_java_tp-final/js/gestionPublicaciones.js"></script>
+        <script src="/cac_java_tp-final/js/mensaje.js"></script>
+        <script src="/cac_java_tp-final/js/menu.js"></script>
     </body>
 
 </html>

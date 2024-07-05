@@ -16,10 +16,9 @@
             <header>
                 <h1>Iniciar sesión</h1>
                 <nav id="nav-desktop">
-                    <ul>
+                    <ul id="nav-menu">
                         <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
-                        <li><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
-                        <!-- <li><a href="/cac_java_tp-final/pages/registrarse.html">Registrarse</a></li> -->
+                        <li id="menu-nueva-publicacion" style="display: none;"><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
                         <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
                         <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
                         <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
@@ -30,17 +29,32 @@
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
-                    <ul class="mobile-menu">
+                    <ul class="mobile-menu">                        
                         <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
-                        <li><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
-                        <!-- <li><a href="/cac_java_tp-final/pages/registrarse.html">Registrarse</a></li> -->
+                        <li id="menu-nueva-publicacion" style="display: none;"><a href="/cac_java_tp-final/pages/publicar.html">Nueva Publicación</a></li>
                         <li><a href="/cac_java_tp-final/pages/login.html">Login</a></li>
                         <li><a href="/cac_java_tp-final/pages/contact.html">Contacto</a></li>
                         <li><a href="/cac_java_tp-final/pages/api.html">API Tiempo</a></li>
                     </ul>
                 </div>
             </header>
-        </div>        
+        </div>
+        
+        <!-- Mensaje de exito -->
+        <div id="mensajeExito" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
+             class="alert alert-success alert-dismissible fade show" role="alert">
+            Usuario creado con éxito!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    onclick="this.parentElement.style.display = 'none';"></button>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div id="mensajeError" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
+             class="alert alert-danger alert-dismissible fade show" role="alert">
+            Error en el inicio de sesión
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    onclick="this.parentElement.style.display = 'none';"></button>
+        </div>
 
         <div class="container w-50 d-flex flex-column align-items-center">           
             <form action="/cac_java_tp-final/LoginServlet" method="post">
@@ -59,33 +73,17 @@
                 <div class="form-group">
                     <a id="ayuda" class="ayuda" href="registrarse.html">Registrarse</a>
                 </div>
-            </form>
-            <!-- Mensaje de exito -->
-            <div id="mensajeExito" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
-             class="alert alert-success alert-dismissible fade show" role="alert">
-            Inicio de sesion correcto!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                    onclick="this.parentElement.style.display = 'none';"></button>
-            </div>
-
-            <!-- Mensaje de error -->
-            <div id="mensajeError" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
-                 class="alert alert-danger alert-dismissible fade show" role="alert">
-                Error en el inicio de sesión
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                        onclick="this.parentElement.style.display = 'none';"></button>
-            </div>
+            </form>            
         </div>
 
-
-        <script src="../js/validator.js"></script>
+        <script src="/cac_java_tp-final/js/validator.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-        <script src="../js/index.js"></script>
+        crossorigin="anonymous"></script>        
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script src="/cac_java_tp-final/js/mensaje.js"></script>
+        <script src="/cac_java_tp-final/js/menu.js"></script>
     </body>
 
 </html>
