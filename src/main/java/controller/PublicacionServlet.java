@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.sql.Date;
+import javax.servlet.http.HttpSession;
+import modelo.Usuario;
 
 @WebServlet("/publicacion")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -62,14 +64,23 @@ public class PublicacionServlet extends HttpServlet {
 
             LocalDate fecha = LocalDate.now();
             
-            String creator_id = "1"; // Suponiendo que obtienes el ID del creador
+            //String creator_id = "1"; // Suponiendo que obtienes el ID del creador
+            
+            // Obtener el ID del creador desde la sesión
+            HttpSession session = request.getSession();
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+            if (usuarioLogueado == null) {
+                response.sendRedirect("pages/login.html?error=not_logged_in");
+                return;
+            }
+            int creator_id = usuarioLogueado.getId();
 
             Publicacion post = new Publicacion();
             post.setTitulo(titulo);
             post.setContenido(contenido);
             post.setImg_path(imgPath); // Guarda la ruta relativa al archivo en la base de datos
             post.setFecha(Date.valueOf(fecha));
-            post.setCreator_id(Integer.parseInt(creator_id));
+            post.setCreator_id(creator_id);
 
             PublicacionDAO publicacionDAO = new PublicacionDAO();
             boolean publicacionExitosa = publicacionDAO.guardarPublicacion(post);

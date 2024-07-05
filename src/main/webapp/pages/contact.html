@@ -14,8 +14,7 @@
     <body>
 
         <div class="mb-5">
-            <header>
-                <h1>Contactanos</h1>
+            <header>                
                 <nav id="nav-desktop">
                     <ul id="nav-menu">
                         <li><a href="/cac_java_tp-final/index.html">Inicio</a></li>
@@ -44,7 +43,7 @@
         <!-- Mensaje de éxito -->
         <div id="mensajeExito" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
              class="alert alert-success alert-dismissible fade show" role="alert">
-            Registro exitoso
+            Su solicitud fue enviada con exito!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
                     onclick="this.parentElement.style.display = 'none';"></button>
         </div>
@@ -52,45 +51,51 @@
         <!-- Mensaje de error -->
         <div id="mensajeError" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
              class="alert alert-danger alert-dismissible fade show" role="alert">
-            Error en el registro
+            Error al enviar el formulario.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
                     onclick="this.parentElement.style.display = 'none';"></button>
         </div>
 
-        <div class="container d-flex flex-column gap-3 justify-content-center align-items-center">
+        <div class="container w-50 d-flex flex-column justify-content-center align-items-center gap-2">
 
-            <form id="contactForm" action="/cac_java_tp-final/Contacto"
-                  autocomplete="on" method="post">
-                <fieldset id="name" class="d-flex flex-row row-gap-3 flex-wrap justify-content-between">
-                    <div class="col-12 col-md-6">
-                        <label for="inputNombre">Nombre</label>
-                        <input type="text" id="inputNombre" name="inputNombre" class="d-block">
-                        <span id="nombre-error" class="error"></span>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputApellido">Apellido</label>
-                        <input type="text" id="inputApellido" name="inputApellido" class="d-block">
-                        <span id="apellido-error" class="error"></span>
-                    </div>
-                </fieldset>
+            <form id="contactForm" action="/cac_java_tp-final/contacto"
+                  autocomplete="on" method="post">            
+                
+                <div class="form-group mb-2 d-flex gap-2">
+                    <label for="inputNombre">Nombre</label>
+                    <input type="text" id="inputNombre" name="nombre">
+                    <span id="nombre-error" class="error"></span>
+                </div>
+                <div class="form-group mb-2 d-flex gap-2">
+                    <label for="inputApellido">Apellido</label>
+                    <input type="text" id="inputApellido" name="apellido">
+                    <span id="apellido-error" class="error"></span>
+                </div>
+                
+                <div class="form-group mb-2 d-flex gap-2">
                 <label for="inputEmail">Email</label>
-                <input type="email" id="inputEmail" name="inputEmail">
+                <input type="email" id="inputEmail" name="email">
                 <span id="email-error" class="error"></span>
-
+                </div>
+                <div class="form-group mb-2 d-flex gap-2">
                 <label for="inputAsunto">Asunto</label>
-                <input type="text" id="inputAsunto" name="inputAsunto">
+                <input type="text" id="inputAsunto" name="asunto">
                 <span id="asunto-error" class="error"></span>
-
+                </div>
+                <div class="form-group mb-2 d-flex gap-2">
                 <label for="inputMensaje">Mensaje</label>
-                <textarea id="inputMensaje" name="inputMensaje" rows="5" cols="30"
+                <textarea id="inputMensaje" name="mensaje" rows="5" cols="30"
                           placeholder="Ingrese su mensaje aquí"></textarea>
                 <span id="mensajeContacto-error" class="error"></span>
-
+                </div>
+                <div class="form-group mb-2 d-flex gap-2">
                 <input type="checkbox" class="form-check-input" id="robotCheck">
                 <label class="form-check-label" for="robotCheck">No soy un robot</label>
                 <span id="robot-error" class="error"></span>
-
-                <input type="submit" class="button col-12 col-md-3 col-lg-2 align-self-center" value="Enviar">
+                </div>
+                <div class="form-group mb-2">
+                <input type="submit" class="btn btn-primary" value="Enviar">
+                </div>
             </form>
         </div>
 

@@ -22,7 +22,7 @@ import com.google.gson.Gson;
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // Obtener las publicaciones desde la base de datos
             int pagina = 1; // Página por defecto
-            int registrosPorPagina = 5; // Cantidad de publicaciones por página
+            int registrosPorPagina = 3; // Cantidad de publicaciones por página
             if (request.getParameter("pagina") != null) {
                 pagina = Integer.parseInt(request.getParameter("pagina"));
             }

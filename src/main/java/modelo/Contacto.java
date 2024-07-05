@@ -2,21 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package modelo;
-import java.sql.Date;
 
-public class Usuario {
-
+/**
+ *
+ * @author Jef
+ */
+public class Contacto {
     private int id;
     private String nombre;
     private String apellido;
     private String email;
-    private String password;
-    private Date fechaNacimiento;
-    private String pais;
+    private String asunto;
+    private String mensaje;
 
-    // Getters y setters
     public int getId() {
         return id;
     }
@@ -49,12 +48,22 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAsunto() {
+        return asunto;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }   
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
 
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
+    
+    
 }
