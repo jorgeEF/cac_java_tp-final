@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="card-body">
                             <h5 class="card-title">${publicacion.titulo}</h5>
                             <p class="card-text">${publicacion.contenido}</p>
-                            <p><a href="./post.html?id=${publicacion.id}" class="btn btn-outline-secondary btn-sm mt-2">Ver mas...</a></p>
+                            <p><a href="/cac_java_tp-final/pages/publicacion.html?id=${publicacion.id}" class="btn btn-outline-secondary btn-sm mt-2">Ver mas...</a></p>
                             <p class="card-text">
                                     <small class="text-body-secondary">Publicado el ${publicacion.fecha}</small>
                             </p>

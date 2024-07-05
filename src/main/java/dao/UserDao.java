@@ -8,10 +8,10 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    public boolean validarUsuario(String email, String contrasena) {
+    public boolean validarUsuario(String email, String password) {
         boolean validar = false;
 
-        String sql = "SELECT * FROM login WHERE email = ? AND contrasena = ?";
+        String sql = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
 
         try {
             //obtenemos la conexion
@@ -20,7 +20,7 @@ public class UserDao {
             PreparedStatement consulta = conexion.prepareStatement(sql);
             //argumentos
             consulta.setString(1, email);
-            consulta.setString(2, contrasena);
+            consulta.setString(2, password);
             //ejecutar la consulta
             ResultSet resultado = consulta.executeQuery();
             

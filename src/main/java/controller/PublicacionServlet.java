@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.PublicacionDAO;
 import modelo.Publicacion;
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ import java.io.OutputStream;
 import java.time.LocalDate;
 import java.sql.Date;
 
-@WebServlet("/publicar")
+@WebServlet("/publicacion")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)   // 50MB
@@ -100,5 +101,25 @@ public class PublicacionServlet extends HttpServlet {
             }
         }
         return "";
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idParam = request.getParameter("id");
+        if (idParam != null) {
+            int id = Integer.parseInt(idParam);
+            PublicacionDAO publicacionDAO = new PublicacionDAO();
+            Publicacion publicacion = publicacionDAO.obtenerPorId(id);
+            if (publicacion != null) {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                Gson gson = new Gson();
+                String publicacionJson = gson.toJson(publicacion);
+                response.getWriter().write(publicacionJson);
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id'.");
+        }
     }
 }

@@ -41,6 +41,22 @@
             </header>
         </div>
 
+        <!-- Mensaje de éxito -->
+        <div id="mensajeExito" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
+             class="alert alert-success alert-dismissible fade show" role="alert">
+            Inicio de sesión correcto!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    onclick="this.parentElement.style.display = 'none';"></button>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div id="mensajeError" style="display: none;" data-aos="fade-down" data-aos-duration="1000"
+             class="alert alert-danger alert-dismissible fade show" role="alert">
+            Error en el inicio de sesión
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    onclick="this.parentElement.style.display = 'none';"></button>
+        </div>
+
 
         <div id="main-content" class="container d-flex flex-column gap-3 justify-content-center">
             <!-- Mostrar los posteos a continuación -->
@@ -71,6 +87,8 @@
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
         <script src="/cac_java_tp-final/js/index.js"></script>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script src="/cac_java_tp-final/js/mensaje.js"></script>
     </body>
 
 </html>

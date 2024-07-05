@@ -11,13 +11,30 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import conexion.ConexionDB;
+import java.sql.SQLException;
 import modelo.Usuario;
 
 public class UsuarioDAO {
-
     
-    public boolean insertarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO registroUsuarios (nombre, apellido, email, password, fechaNacimiento, pais) VALUES (?, ?, ?, ?, ?, ?)";
+    public String obtenerNombreUsuarioPorId(int id) {
+        String nombreUsuario = null;
+        String query = "SELECT nombre FROM usuarios WHERE id = ?";
+
+        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    nombreUsuario = rs.getString("nombre");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombreUsuario;
+    }
+    
+    public boolean crearUsuario(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (nombre, apellido, email, password, fechaNacimiento, pais) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -52,7 +69,7 @@ public class UsuarioDAO {
     public List<Usuario> obtenerTodos() {
         
         List<Usuario> usuarios = new ArrayList<>();
-        String query = "SELECT * FROM registroUsuarios";
+        String query = "SELECT * FROM usuarios";
         
         try (Connection conn = ConexionDB.obtenerConexion();
              Statement stmt = conn.createStatement();
@@ -69,7 +86,7 @@ public class UsuarioDAO {
     }
 
     public Usuario obtenerPorId(int id) {
-        String query = "SELECT * FROM registroUsuarios WHERE id = ?";
+        String query = "SELECT * FROM usuarios WHERE id = ?";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             
@@ -86,7 +103,7 @@ public class UsuarioDAO {
     }
 
     public boolean modificar(Usuario usuario) {
-        String query = "UPDATE registroUsuarios SET nombre = ?, apellido = ?, email = ?, password = ?, fechaNacimiento = ?, pais = ? WHERE id = ?";
+        String query = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ?, fechaNacimiento = ?, pais = ? WHERE id = ?";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             
@@ -107,7 +124,7 @@ public class UsuarioDAO {
     }
 
     public boolean eliminar(int id) {
-        String query = "DELETE FROM registroUsuarios WHERE id = ?";
+        String query = "DELETE FROM usuarios WHERE id = ?";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             

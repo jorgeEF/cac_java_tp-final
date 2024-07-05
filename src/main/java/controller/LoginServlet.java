@@ -25,9 +25,9 @@ public class LoginServlet extends HttpServlet {
 
         // Redirigir según la validación
         if (usuarioValido) {
-            response.sendRedirect("/pages/gestionUsuarios.html");
+            response.sendRedirect("/cac_java_tp-final/index.html?exito=true");
         } else {
-            response.sendRedirect("index.html");
+            response.sendRedirect("/cac_java_tp-final/pages/login.html?exito=false");
         }
     }
 }
