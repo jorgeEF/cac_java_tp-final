@@ -5,10 +5,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 var usuario = JSON.parse(xhr.responseText);
                 if (usuario) {
                     document.getElementById('menu-nueva-publicacion').style.display = 'block';
+                    document.getElementById('menu-sesion').innerHTML = '<a href="/cac_java_tp-final/LogoutServlet" style="color: red">Logout</a>';
                 }
             }
         };
         xhr.open("GET", "/cac_java_tp-final/GetUsuarioServlet", true);
         xhr.send();
     });
+    
+    
 

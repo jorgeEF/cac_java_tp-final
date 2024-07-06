@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var publicaciones = JSON.parse(xhr.responseText);
-                mostrarPublicaciones(publicaciones);
+                if(publicaciones.length > 0){
+                    mostrarPublicaciones(publicaciones);                    
+                } else {
+                    mostrarCrearPublicacion();
+                }                
             }
         };
         xhr.open("GET", "publicaciones?pagina=" + pagina, true);
@@ -23,21 +27,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para mostrar las publicaciones en el HTML
     function mostrarPublicaciones(publicaciones) {
         var contenidoHtml = '';
-        publicaciones.forEach(function (publicacion) {
+        publicaciones.forEach(function (publicacion) {            
             contenidoHtml += `
-            <div class="card bg-transparent mb-3 border border-0">
-                <div class="row no-gutters">
-                    <div class="col-md-2 d-flex align-items-center">
-                        <img src="/cac_java_tp-final${publicacion.img_path}" class="img-fluid rounded-circle" alt="...">
-                    </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h5 class="card-title">${publicacion.titulo}</h5>
-                            <p class="card-text">${publicacion.contenido}</p>
-                            <p><a href="/cac_java_tp-final/pages/publicacion.html?id=${publicacion.id}" class="btn btn-outline-secondary btn-sm mt-2">Ver mas...</a></p>
-                            <p class="card-text">
-                                    <small class="text-body-secondary">Publicado el ${publicacion.fecha}</small>
-                            </p>
+            <div class="container d-flex justify-content-center mb-4">
+                <div class="card bg-transparent mb-3 border border-0">
+                    <div class="row no-gutters">
+                        <div class="col-md-2 d-flex align-items-center">
+                            <img src="/cac_java_tp-final${publicacion.img_path}" class="img-fluid rounded-circle" alt="...">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">${publicacion.titulo}</h5>
+                                <p class="card-text">${publicacion.contenido}</p>
+                                <p><a href="/cac_java_tp-final/pages/publicacion.html?id=${publicacion.id}" class="btn btn-outline-secondary btn-sm mt-2">Ver mas...</a></p>
+                                <p class="card-text">
+                                        <small class="text-body-secondary">Publicado el ${publicacion.fecha}</small>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         document.getElementById('main-content').innerHTML = contenidoHtml;
     }
+    
+    function mostrarCrearPublicacion(){
+        var contenidoHtml = '<div class="container d-flex justify-content-center mb-4"><h4>No hay publicaciones todavía.. <a href="/cac_java_tp-final/pages/login.html">inicia sesión</a> para crear la primera!</h4></div>';
+        document.getElementById('main-content').innerHTML = contenidoHtml;        
+    }    
 
     // Cargar las primeras publicaciones al cargar la página
     cargarPublicaciones(1);

@@ -7,5 +7,3 @@ window.onload = function () {
         document.getElementById('mensajeError').style.display = 'block';
     }
 };
-
-console.log("mensaje.js cargado");
