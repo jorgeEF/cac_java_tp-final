@@ -96,33 +96,29 @@ public class PublicacionDAO {
         return null;
     }
 
-    public boolean modificar(Publicacion post) {
-        String query = "UPDATE publicaciones SET titulo = ?, contenido = ?, img_id = ?, creator_id = ?, fecha = ? WHERE id = ?";
-        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, post.getTitulo());
-            pstmt.setString(2, post.getContenido());
-            pstmt.setString(3, post.getImg_path());
-            pstmt.setInt(4, post.getCreator_id());
-            pstmt.setDate(5, post.getFecha());
-
-            int filasAfectadas = pstmt.executeUpdate();
-            return filasAfectadas > 0;
+    public boolean eliminarPublicacion(int id) {
+        String sql = "DELETE FROM publicaciones WHERE id = ?";
+        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
 
-    public boolean eliminar(int id) {
-        String query = "DELETE FROM publicaciones WHERE id = ?";
-        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, id);
-            int filasAfectadas = pstmt.executeUpdate();
-            return filasAfectadas > 0;
+    public boolean actualizarPublicacion(Publicacion publicacion) {
+        String sql = "UPDATE publicaciones SET titulo = ?, contenido = ?, img_path = ? WHERE id = ?";
+        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, publicacion.getTitulo());
+            pstmt.setString(2, publicacion.getContenido());
+            pstmt.setString(3, publicacion.getImg_path());
+            pstmt.setInt(4, publicacion.getId());
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }

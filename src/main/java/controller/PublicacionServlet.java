@@ -63,9 +63,8 @@ public class PublicacionServlet extends HttpServlet {
             String imgPath = UPLOAD_DIRECTORY + "/" + fileName; // Ruta relativa al archivo
 
             LocalDate fecha = LocalDate.now();
-            
+
             //String creator_id = "1"; // Suponiendo que obtienes el ID del creador
-            
             // Obtener el ID del creador desde la sesión
             HttpSession session = request.getSession();
             Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
@@ -114,7 +113,7 @@ public class PublicacionServlet extends HttpServlet {
         }
         return "";
     }
-    
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idParam = request.getParameter("id");
         if (idParam != null) {
@@ -132,6 +131,65 @@ public class PublicacionServlet extends HttpServlet {
             }
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id'.");
+        }
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idParam = request.getParameter("id");
+        if (idParam != null) {
+            int id = Integer.parseInt(idParam);
+
+            // Obtener los parámetros de la solicitud
+            String titulo = request.getParameter("titulo");
+            String contenido = request.getParameter("contenido");
+            String imgPath = request.getParameter("img_path");
+
+            // Validar que los parámetros no sean nulos
+            if (titulo != null && contenido != null) {
+                PublicacionDAO publicacionDAO = new PublicacionDAO();
+                Publicacion publicacion = publicacionDAO.obtenerPorId(id);
+
+                if (publicacion != null) {
+                    if (titulo != null) {
+                        publicacion.setTitulo(titulo);
+                    }
+                    if (contenido != null) {
+                        publicacion.setContenido(contenido);
+                    }
+                    if (imgPath != null) {
+                        publicacion.setImg_path(imgPath);
+                    }
+
+                    boolean actualizado = publicacionDAO.actualizarPublicacion(publicacion);
+                    if (actualizado) {
+                        response.setStatus(HttpServletResponse.SC_OK);
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // O el código de estado apropiado
+                    }
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }
+            } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idParam = request.getParameter("id");
+        if (idParam != null) {
+            int id = Integer.parseInt(idParam);
+            PublicacionDAO publicacionDAO = new PublicacionDAO();
+            boolean eliminado = publicacionDAO.eliminarPublicacion(id);
+            if (eliminado) {
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }

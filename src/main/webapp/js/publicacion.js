@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.open("GET", "/cac_java_tp-final/publicacion?id=" + id, true);
         xhr.send();
     }
-    
+
     // Función para cargar el usuario
     function cargarUsuario(userId) {
         var xhr = new XMLHttpRequest();
@@ -46,11 +46,35 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('contenido-publicacion').textContent = publicacion.contenido;
     }
 
+    function eliminarPublicacion(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", `/cac_java_tp-final/publicacion?id=${id}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 204) {
+                alert("Publicación eliminada con éxito");
+                window.location.href = "/cac_java_tp-final/index.html";
+            } else if (xhr.readyState === 4) {
+                alert("Error al eliminar la publicación");
+            }
+        };
+        xhr.send();
+    }
+
     // Cargar la publicación al cargar la página
     if (publicacionId) {
         cargarPublicacion(publicacionId);
+
+        // Añadir eventos a los botones de modificar y eliminar
+        document.getElementById('eliminar-btn').addEventListener('click', function () {
+            if (confirm("¿Estás seguro de que deseas eliminar esta publicación?")) {
+                eliminarPublicacion(publicacionId);
+            }
+        });
+
+        document.getElementById('modificar-btn').addEventListener('click', function () {
+            window.location.href = `/cac_java_tp-final/pages/editar.html?id=${publicacionId}`;
+        });
     } else {
         console.error("No se encontró el ID de la publicación en la URL.");
     }
 });
-
